@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,7 +37,12 @@ namespace SetWallpapers.Model
 
         private string LoadDocument(string path)
         {
-            string htmlDoc = "";
+            string htmlDoc;
+
+            using (WebClient client = new WebClient())
+            {
+                htmlDoc = client.DownloadString(path);
+            }
 
             return htmlDoc;
         }
