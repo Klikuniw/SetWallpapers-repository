@@ -5,17 +5,18 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using AngleSharp.Dom;
 
 namespace SetWallpapers.Model
 {
     public class WallpaperCraftParser : IWallpaperParser
     {
-        public string WebsiteName => "";
+        public string WebsiteName => "https://wallpaperscraft.com";
 
-        public List<string> Categories => ReadCategories("");
+        public List<string> Categories => ReadCategories("wallpaperscraftInfo.xaml");
 
-        public List<string> Resolutions => ReadResolutions("");
+        public List<string> Resolutions => ReadResolutions("wallpaperscraftInfo.xaml");
 
         public string ParseImage(string path)
         {
@@ -59,14 +60,44 @@ namespace SetWallpapers.Model
             return hrefTags;
         }
 
-        public List<string> ReadCategories(string paths)
+        public List<string> ReadCategories(string path)
         {
-            throw new NotImplementedException();
+            List<string> categories = new List<string>();
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+            foreach (XmlNode xmlNode_polygon in xDoc.DocumentElement)
+            {
+                if (xmlNode_polygon.Name == "categories")
+                {
+                    foreach (XmlElement xmlElement_point in xmlNode_polygon.ChildNodes)
+                    {
+                        categories.Add(xmlElement_point.Attributes["Name"].Value);
+                    }
+                }
+            }
+
+            return categories;
         }
 
-        public List<string> ReadResolutions(string paths)
+        public List<string> ReadResolutions(string path)
         {
-            throw new NotImplementedException();
+            List<string> resolutions = new List<string>();
+
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+            foreach (XmlNode xmlNode_polygon in xDoc.DocumentElement)
+            {
+                if (xmlNode_polygon.Name == "resolutions")
+                {
+                    foreach (XmlElement xmlElement_point in xmlNode_polygon.ChildNodes)
+                    {
+                        resolutions.Add(xmlElement_point.Attributes["value"].Value);
+                    }
+                }
+            }
+
+            return resolutions;
         }
 
         private string LoadDocument(string path)

@@ -17,8 +17,8 @@ namespace SetWallpapers.Model
         string ParseImage(string path);
         List<string> ParseImages(string path);
 
-        List<string> ReadCategories(string paths);
-        List<string> ReadResolutions(string paths);
+        List<string> ReadCategories(string path);
+        List<string> ReadResolutions(string path);
 
     }
 }
