@@ -1,9 +1,11 @@
-﻿using System;
+﻿using AngleSharp.Html.Parser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AngleSharp.Dom;
 
 namespace SetWallpapers.Model
 {
@@ -17,12 +19,44 @@ namespace SetWallpapers.Model
 
         public string ParseImage(string path)
         {
-            throw new NotImplementedException();
+            var parser = new HtmlParser();
+            var document = parser.ParseDocument(LoadDocument(path));
+
+            foreach (IElement element in document.QuerySelectorAll("img"))
+            {
+                string res = element.GetAttribute("src");
+                var words = res.Split('.');
+
+                if (words[words.Length - 1] == "jpg")
+                {
+                    return res;
+                }
+
+            }
+
+            return null;
         }
 
-        public List<string> ParseImages(List<string> paths)
+        public List<string> ParseImages(string path)
         {
-            throw new NotImplementedException();
+            List<string> hrefTags = new List<string>();
+
+            var parser = new HtmlParser();
+            var document = parser.ParseDocument(LoadDocument(path));
+
+            foreach (IElement element in document.QuerySelectorAll("img"))
+            {
+                string res = element.GetAttribute("src");
+                var words = res.Split('.');
+
+                if (words[words.Length - 1] == "jpg")
+                {
+                    hrefTags.Add(res);
+                }
+
+            }
+
+            return hrefTags;
         }
 
         public List<string> ReadCategories(string paths)

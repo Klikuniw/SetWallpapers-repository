@@ -15,7 +15,7 @@ namespace SetWallpapers.Model
         List<string> Resolutions { get; }
         
         string ParseImage(string path);
-        List<string> ParseImages(List<string> paths);
+        List<string> ParseImages(string path);
 
         List<string> ReadCategories(string paths);
         List<string> ReadResolutions(string paths);
