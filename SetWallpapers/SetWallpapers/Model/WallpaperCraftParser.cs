@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Html.Parser;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -14,9 +15,9 @@ namespace SetWallpapers.Model
     {
         public string WebsiteName => "https://wallpaperscraft.com";
 
-        public List<string> Categories => ReadCategories("wallpaperscraftInfo.xaml");
+        public ObservableCollection<string> Categories => ReadCategories("wallpaperscraftInfo.xml");
 
-        public List<string> Resolutions => ReadResolutions("wallpaperscraftInfo.xaml");
+        public ObservableCollection<string> Resolutions => ReadResolutions("wallpaperscraftInfo.xml");
 
         public string ParseImage(string path)
         {
@@ -60,9 +61,9 @@ namespace SetWallpapers.Model
             return hrefTags;
         }
 
-        public List<string> ReadCategories(string path)
+        public ObservableCollection<string> ReadCategories(string path)
         {
-            List<string> categories = new List<string>();
+            ObservableCollection<string> categories = new ObservableCollection<string>();
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(path);
@@ -80,9 +81,9 @@ namespace SetWallpapers.Model
             return categories;
         }
 
-        public List<string> ReadResolutions(string path)
+        public ObservableCollection<string> ReadResolutions(string path)
         {
-            List<string> resolutions = new List<string>();
+            ObservableCollection<string> resolutions = new ObservableCollection<string>();
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(path);
@@ -111,7 +112,6 @@ namespace SetWallpapers.Model
 
             return htmlDoc;
         }
-
 
     }
 }

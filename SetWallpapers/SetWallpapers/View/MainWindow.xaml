@@ -3,9 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SetWallpapers"
+        xmlns:local="clr-namespace:SetWallpapers.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="400">
+
+
+
+    <Window.DataContext>
+        <local:MainWindowViewModel></local:MainWindowViewModel>
+    </Window.DataContext>
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
@@ -18,23 +26,23 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <ListBox Margin="5" Name="ListBoxCategories">
+            <ListBox Margin="5" Name="ListBoxCategories" ItemsSource="{Binding Path = Categories}">
 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <CheckBox Content="{Binding Path = Categories}"></CheckBox>
+                        <StackPanel Orientation="Vertical">
+                            <CheckBox Content="{Binding}"></CheckBox>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
 
             </ListBox>
 
-            <ListBox Margin="5" Grid.Column="1" Name="ListBoxResolutions">
+            <ListBox Margin="5" Grid.Column="1" Name="ListBoxResolutions" ItemsSource="{Binding Path = Resolutions}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <RadioButton Content="{Binding Path = Resolutions}"></RadioButton>
+                        <StackPanel Orientation="Vertical">
+                            <RadioButton Content="{Binding}"></RadioButton>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
