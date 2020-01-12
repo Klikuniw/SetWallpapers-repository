@@ -80,6 +80,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\Category.cs" />
     <Compile Include="Model\IWallpaperParser.cs" />
     <Compile Include="Model\WallpaperCraftParser.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

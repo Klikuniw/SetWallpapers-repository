@@ -31,7 +31,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
-                            <CheckBox Content="{Binding}"></CheckBox>
+                            <CheckBox Content="{Binding Path=Name}"></CheckBox>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

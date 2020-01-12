@@ -15,7 +15,7 @@ namespace SetWallpapers.Model
     {
         public string WebsiteName => "https://wallpaperscraft.com";
 
-        public ObservableCollection<string> Categories => ReadCategories("wallpaperscraftInfo.xml");
+        public ObservableCollection<Category> Categories => ReadCategories("wallpaperscraftInfo.xml");
 
         public ObservableCollection<string> Resolutions => ReadResolutions("wallpaperscraftInfo.xml");
 
@@ -61,9 +61,9 @@ namespace SetWallpapers.Model
             return hrefTags;
         }
 
-        public ObservableCollection<string> ReadCategories(string path)
+        public ObservableCollection<Category> ReadCategories(string path)
         {
-            ObservableCollection<string> categories = new ObservableCollection<string>();
+            ObservableCollection<Category> categories = new ObservableCollection<Category>();
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(path);
@@ -73,7 +73,7 @@ namespace SetWallpapers.Model
                 {
                     foreach (XmlElement xmlElement_point in xmlNode_polygon.ChildNodes)
                     {
-                        categories.Add(xmlElement_point.Attributes["Name"].Value);
+                        categories.Add(new Category(){Name = xmlElement_point.Attributes["name"].Value, Tag = xmlElement_point.Attributes["tag"].Value });
                     }
                 }
             }

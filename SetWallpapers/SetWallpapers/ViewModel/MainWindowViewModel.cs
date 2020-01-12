@@ -12,10 +12,10 @@ namespace SetWallpapers.ViewModel
     {
         private readonly WallpaperCraftParser _parser = new WallpaperCraftParser();
 
-        private ObservableCollection<string> _categories;
+        private ObservableCollection<Category> _categories;
         private ObservableCollection<string> _resolutions;
 
-        public ObservableCollection<string> Categories
+        public ObservableCollection<Category> Categories
         {
             get
             {
