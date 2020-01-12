@@ -83,6 +83,7 @@
     <Compile Include="Model\IWallpaperParser.cs" />
     <Compile Include="Model\WallpaperCraftParser.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
