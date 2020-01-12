@@ -3,10 +3,86 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="clr-namespace:MaterialDesignThemes;assembly=MaterialDesignThemes.Wpf"
         xmlns:local="clr-namespace:SetWallpapers"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="SetWallpaper" Height="450" Width="400">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <ListBox Margin="5" Name="ListBoxCategories">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <CheckBox Content="{Binding Path = Categories}"></CheckBox>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+
+
+
+            </ListBox>
+
+            <ListBox Margin="5" Grid.Column="1" Name="ListBoxResolutions">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <RadioButton Content="{Binding Path = Resolutions}"></RadioButton>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </Grid>
+
+        <Grid Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <WrapPanel VerticalAlignment="Center" Margin="5,0" Orientation="Horizontal">
+
+                <TextBlock VerticalAlignment="Center" Margin="0,0,10,0"  >Set interval:</TextBlock>
+
+                <ComboBox Grid.Row="1" Width="100" Height="25">
+                    <ComboBoxItem>
+                        5 min
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        30 min
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        1 hour
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        1 day
+                    </ComboBoxItem>
+                </ComboBox>
+            </WrapPanel>
+
+            <Button Grid.Row="1" Height="25" Width="100">Save</Button>
+
+        </Grid>
+
+
+
+
         
+
+
+
+
     </Grid>
 </Window>
