@@ -12,13 +12,13 @@ namespace SetWallpapers.Model
         string WebsiteName { get; }
 
         ObservableCollection<Category> Categories { get; }
-        ObservableCollection<string> Resolutions { get; }
+        ObservableCollection<Resolution> Resolutions { get; }
         
         string ParseImage(string path);
         List<string> ParseImages(string path);
 
         ObservableCollection<Category> ReadCategories(string path);
-        ObservableCollection<string> ReadResolutions(string path);
+        ObservableCollection<Resolution> ReadResolutions(string path);
 
     }
 }

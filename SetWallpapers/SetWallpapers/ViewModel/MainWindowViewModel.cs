@@ -11,9 +11,8 @@ namespace SetWallpapers.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly WallpaperCraftParser _parser = new WallpaperCraftParser();
-
         private ObservableCollection<Category> _categories;
-        private ObservableCollection<string> _resolutions;
+        private ObservableCollection<Resolution> _resolutions;
 
         public ObservableCollection<Category> Categories
         {
@@ -28,7 +27,7 @@ namespace SetWallpapers.ViewModel
             }
         }
 
-        public ObservableCollection<string> Resolutions 
+        public ObservableCollection<Resolution> Resolutions 
         {
             get
             {

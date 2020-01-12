@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace SetWallpapers.Model
 {
-    public class Category
+    public class Resolution
     {
-        public string Name { get; set; }
-        public string Tag { get; set; }
+        public string Value { get; set; }
         public bool Checked { get; set; }
-
     }
 }

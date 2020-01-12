@@ -17,7 +17,7 @@ namespace SetWallpapers.Model
 
         public ObservableCollection<Category> Categories => ReadCategories("wallpaperscraftInfo.xml");
 
-        public ObservableCollection<string> Resolutions => ReadResolutions("wallpaperscraftInfo.xml");
+        public ObservableCollection<Resolution> Resolutions => ReadResolutions("wallpaperscraftInfo.xml");
 
         public string ParseImage(string path)
         {
@@ -81,9 +81,9 @@ namespace SetWallpapers.Model
             return categories;
         }
 
-        public ObservableCollection<string> ReadResolutions(string path)
+        public ObservableCollection<Resolution> ReadResolutions(string path)
         {
-            ObservableCollection<string> resolutions = new ObservableCollection<string>();
+            ObservableCollection<Resolution> resolutions = new ObservableCollection<Resolution>();
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(path);
@@ -93,7 +93,7 @@ namespace SetWallpapers.Model
                 {
                     foreach (XmlElement xmlElement_point in xmlNode_polygon.ChildNodes)
                     {
-                        resolutions.Add(xmlElement_point.Attributes["value"].Value);
+                        resolutions.Add(new Resolution(){Value = xmlElement_point.Attributes["value"].Value });
                     }
                 }
             }
