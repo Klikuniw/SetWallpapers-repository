@@ -42,7 +42,8 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
-                            <RadioButton Content="{Binding}"></RadioButton>
+                            <RadioButton IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsSelected}"
+                                         Content="{Binding}"></RadioButton>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
