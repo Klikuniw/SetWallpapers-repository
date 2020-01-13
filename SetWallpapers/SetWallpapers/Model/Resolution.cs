@@ -9,6 +9,5 @@ namespace SetWallpapers.Model
     public class Resolution
     {
         public string Value { get; set; }
-        public bool Checked { get; set; }
     }
 }

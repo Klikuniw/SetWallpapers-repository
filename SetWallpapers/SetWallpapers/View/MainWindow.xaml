@@ -39,11 +39,13 @@
 
             </ListBox>
 
-            <ComboBox Margin="5" Grid.Column="1" ItemsSource="{Binding Path = Resolutions}"
-                      DisplayMemberPath="Value" SelectedValuePath="{Binding Path = SelectedResolution }"
-                      SelectedValue="{Binding Path  = Value}">
+            <ComboBox Margin="5" Grid.Column="1" 
+                      ItemsSource="{Binding Path = Resolutions}"
+                      SelectedValue="{Binding Path = SelectedResolution.Value}"
+                      SelectedValuePath="Value"
+                      DisplayMemberPath="Value"
+                     >
             </ComboBox>
-
         </Grid>
 
         <Grid Row="1">

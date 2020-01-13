@@ -54,7 +54,8 @@ namespace SetWallpapers.ViewModel
             }
             set
             {
-
+                _selectedResolution = value;
+                OnPropertyChanged("SelectedResolution");
             }
         }
 

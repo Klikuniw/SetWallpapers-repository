@@ -10,11 +10,6 @@ namespace SetWallpapers.Model
     interface IWallpaperParser
     {
         string WebsiteName { get; }
-        //string Interval { get; set; }
-
-        //ObservableCollection<Category> Categories { get; }
-        //ObservableCollection<Resolution> Resolutions { get; }
-        
         string ParseImage(string path);
         List<string> ParseImages(string path);
 

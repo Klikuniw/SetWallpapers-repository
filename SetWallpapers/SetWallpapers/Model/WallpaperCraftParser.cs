@@ -15,10 +15,6 @@ namespace SetWallpapers.Model
     {
         public string WebsiteName => "https://wallpaperscraft.com";
 
-        //public ObservableCollection<Category> Categories => ReadCategories("wallpaperscraftInfo.xml");
-
-        //public ObservableCollection<Resolution> Resolutions => ReadResolutions("wallpaperscraftInfo.xml");
-
         public string ParseImage(string path)
         {
             var parser = new HtmlParser();
@@ -69,13 +65,12 @@ namespace SetWallpapers.Model
             {
                 if (xmlNode_polygon.Name == "selectedResolution")
                 {
-                    return new Resolution(){Value = xmlNode_polygon.Attributes["value"].Value };
+                    return new Resolution() { Value = xmlNode_polygon.Attributes["value"].Value };
                 }
             }
 
             return null;
         }
-
         public ObservableCollection<Category> ReadCategories(string path)
         {
             ObservableCollection<Category> categories = new ObservableCollection<Category>();
@@ -88,8 +83,9 @@ namespace SetWallpapers.Model
                 {
                     foreach (XmlElement xmlElement_point in xmlNode_polygon.ChildNodes)
                     {
-                        categories.Add(new Category(){
-                            Name = xmlElement_point.Attributes["name"].Value, 
+                        categories.Add(new Category()
+                        {
+                            Name = xmlElement_point.Attributes["name"].Value,
                             Tag = xmlElement_point.Attributes["tag"].Value,
                             Checked = Convert.ToBoolean(xmlElement_point.Attributes["checked"].Value)
                         });
@@ -100,22 +96,6 @@ namespace SetWallpapers.Model
 
             return categories;
         }
-
-        public string ReadInterval(string path)
-        {
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.Load(path);
-            foreach (XmlNode xmlNode_polygon in xDoc.DocumentElement)
-            {
-                if (xmlNode_polygon.Name == "interval")
-                {
-                    return xmlNode_polygon.Attributes["value"].Value;
-                }
-            }
-
-            return null;
-        }
-
         public ObservableCollection<Resolution> ReadResolutions(string path)
         {
             ObservableCollection<Resolution> resolutions = new ObservableCollection<Resolution>();
@@ -128,9 +108,9 @@ namespace SetWallpapers.Model
                 {
                     foreach (XmlElement xmlElement_point in xmlNode_polygon.ChildNodes)
                     {
-                        resolutions.Add(new Resolution(){
-                            Value = xmlElement_point.Attributes["value"].Value,
-                            Checked = Convert.ToBoolean(xmlElement_point.Attributes["checked"].Value)
+                        resolutions.Add(new Resolution()
+                        {
+                            Value = xmlElement_point.Attributes["value"].Value
                         });
                     }
                 }
@@ -149,6 +129,19 @@ namespace SetWallpapers.Model
             }
 
             return htmlDoc;
+        }
+        public string ReadInterval(string path)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+            foreach (XmlNode xmlNode_polygon in xDoc.DocumentElement)
+            {
+                if (xmlNode_polygon.Name == "interval")
+                {
+                    return xmlNode_polygon.Attributes["value"].Value;
+                }
+            }
+            return null;
         }
 
     }
