@@ -20,6 +20,7 @@ namespace SetWallpapers.Model
 
         ObservableCollection<Category> ReadCategories(string path);
         ObservableCollection<Resolution> ReadResolutions(string path);
+        Resolution ReadSelectedResolution(string path);
         string ReadInterval(string path);
     }
 }

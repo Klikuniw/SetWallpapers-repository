@@ -13,6 +13,7 @@ namespace SetWallpapers.ViewModel
         private readonly WallpaperCraftParser _parser = new WallpaperCraftParser();
         private ObservableCollection<Category> _categories;
         private ObservableCollection<Resolution> _resolutions;
+        private Resolution _selectedResolution;
 
         public ObservableCollection<Category> Categories
         {
@@ -20,7 +21,7 @@ namespace SetWallpapers.ViewModel
             {
                 if (_categories == null)
                 {
-                    _categories = _parser.Categories;
+                    _categories = _parser.ReadCategories("wallpaperscraftInfo.xml");
                 }
 
                 return _categories;
@@ -33,14 +34,29 @@ namespace SetWallpapers.ViewModel
             {
                 if (_resolutions == null)
                 {
-                    _resolutions = _parser.Resolutions;
+                    _resolutions = _parser.ReadResolutions("wallpaperscraftInfo.xml");
                 }
 
                 return _resolutions;
             }
         }
 
+        public Resolution SelectedResolution
+        {
+            get
+            {
+                if (_selectedResolution == null)
+                {
+                    _selectedResolution = _parser.ReadSelectedResolution("wallpaperscraftInfo.xml");
+                }
 
+                return _selectedResolution;
+            }
+            set
+            {
+
+            }
+        }
 
 
 

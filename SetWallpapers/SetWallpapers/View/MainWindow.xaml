@@ -32,23 +32,17 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
-                            <CheckBox Content="{Binding Path=Name}"></CheckBox>
+                            <CheckBox Content="{Binding Path=Name}" IsChecked="{Binding Path = Checked}"></CheckBox>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
 
             </ListBox>
 
-            <ListBox Margin="5" Grid.Column="1" Name="ListBoxResolutions" ItemsSource="{Binding Path = Resolutions}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical">
-                            <RadioButton IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}},Path=IsSelected}"
-                                         Content="{Binding Path=Value}"></RadioButton>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <ComboBox Margin="5" Grid.Column="1" ItemsSource="{Binding Path = Resolutions}"
+                      DisplayMemberPath="Value" SelectedValuePath="{Binding Path = SelectedResolution }"
+                      SelectedValue="{Binding Path  = Value}">
+            </ComboBox>
 
         </Grid>
 

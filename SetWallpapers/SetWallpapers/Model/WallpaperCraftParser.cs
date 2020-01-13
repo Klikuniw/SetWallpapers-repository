@@ -61,6 +61,21 @@ namespace SetWallpapers.Model
             return hrefTags;
         }
 
+        public Resolution ReadSelectedResolution(string path)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+            foreach (XmlNode xmlNode_polygon in xDoc.DocumentElement)
+            {
+                if (xmlNode_polygon.Name == "selectedResolution")
+                {
+                    return new Resolution(){Value = xmlNode_polygon.Attributes["value"].Value };
+                }
+            }
+
+            return null;
+        }
+
         public ObservableCollection<Category> ReadCategories(string path)
         {
             ObservableCollection<Category> categories = new ObservableCollection<Category>();
@@ -76,7 +91,7 @@ namespace SetWallpapers.Model
                         categories.Add(new Category(){
                             Name = xmlElement_point.Attributes["name"].Value, 
                             Tag = xmlElement_point.Attributes["tag"].Value,
-                            Checked = Convert.ToBoolean(xmlElement_point.Attributes["chacked"].Value)
+                            Checked = Convert.ToBoolean(xmlElement_point.Attributes["checked"].Value)
                         });
                     }
 
@@ -115,7 +130,7 @@ namespace SetWallpapers.Model
                     {
                         resolutions.Add(new Resolution(){
                             Value = xmlElement_point.Attributes["value"].Value,
-                            Checked = Convert.ToBoolean(xmlElement_point.Attributes["chacked"].Value)
+                            Checked = Convert.ToBoolean(xmlElement_point.Attributes["checked"].Value)
                         });
                     }
                 }
