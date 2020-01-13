@@ -58,19 +58,10 @@
 
                 <TextBlock VerticalAlignment="Center" Margin="0,0,10,0"  >Set interval:</TextBlock>
 
-                <ComboBox Grid.Row="1" Width="100" Height="25">
-                    <ComboBoxItem>
-                        5 min
-                    </ComboBoxItem>
-                    <ComboBoxItem>
-                        30 min
-                    </ComboBoxItem>
-                    <ComboBoxItem>
-                        1 hour
-                    </ComboBoxItem>
-                    <ComboBoxItem>
-                        1 day
-                    </ComboBoxItem>
+                <ComboBox Width="100" Height="25"
+                          ItemsSource="{Binding Path = Intervals}"
+                          SelectedValue="{Binding Path = SelectedInterval}"
+                          >
                 </ComboBox>
             </WrapPanel>
 

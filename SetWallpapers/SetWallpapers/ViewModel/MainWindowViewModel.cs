@@ -13,7 +13,9 @@ namespace SetWallpapers.ViewModel
         private readonly WallpaperCraftParser _parser = new WallpaperCraftParser();
         private ObservableCollection<Category> _categories;
         private ObservableCollection<Resolution> _resolutions;
+        private ObservableCollection<string> _intervals;
         private Resolution _selectedResolution;
+        private string _selectedInterval;
 
         public ObservableCollection<Category> Categories
         {
@@ -25,6 +27,11 @@ namespace SetWallpapers.ViewModel
                 }
 
                 return _categories;
+            }
+            set
+            {
+                _categories = value;
+                OnPropertyChanged("Categories");
             }
         }
 
@@ -38,6 +45,19 @@ namespace SetWallpapers.ViewModel
                 }
 
                 return _resolutions;
+            }
+        }
+
+        public ObservableCollection<string> Intervals
+        {
+            get
+            {
+                if (_intervals == null)
+                {
+                    _intervals = new ObservableCollection<string>(){"5 min","10 min","1 day"};
+                }
+
+                return _intervals;
             }
         }
 
@@ -59,6 +79,23 @@ namespace SetWallpapers.ViewModel
             }
         }
 
+        public string SelectedInterval
+        {
+            get
+            {
+                if (_selectedInterval == null)
+                {
+                    _selectedInterval = _parser.ReadInterval("wallpaperscraftInfo.xml");
+                }
+
+                return _selectedInterval;
+            }
+            set
+            {
+                _selectedInterval = value;
+                OnPropertyChanged("SelectedInterval");
+            }
+        }
 
 
 
