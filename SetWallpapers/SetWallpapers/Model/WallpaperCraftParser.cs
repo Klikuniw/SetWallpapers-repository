@@ -15,9 +15,9 @@ namespace SetWallpapers.Model
     {
         public string WebsiteName => "https://wallpaperscraft.com";
 
-        public ObservableCollection<Category> Categories => ReadCategories("wallpaperscraftInfo.xml");
+        //public ObservableCollection<Category> Categories => ReadCategories("wallpaperscraftInfo.xml");
 
-        public ObservableCollection<Resolution> Resolutions => ReadResolutions("wallpaperscraftInfo.xml");
+        //public ObservableCollection<Resolution> Resolutions => ReadResolutions("wallpaperscraftInfo.xml");
 
         public string ParseImage(string path)
         {
@@ -73,12 +73,32 @@ namespace SetWallpapers.Model
                 {
                     foreach (XmlElement xmlElement_point in xmlNode_polygon.ChildNodes)
                     {
-                        categories.Add(new Category(){Name = xmlElement_point.Attributes["name"].Value, Tag = xmlElement_point.Attributes["tag"].Value });
+                        categories.Add(new Category(){
+                            Name = xmlElement_point.Attributes["name"].Value, 
+                            Tag = xmlElement_point.Attributes["tag"].Value,
+                            Checked = Convert.ToBoolean(xmlElement_point.Attributes["chacked"].Value)
+                        });
                     }
+
                 }
             }
 
             return categories;
+        }
+
+        public string ReadInterval(string path)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+            foreach (XmlNode xmlNode_polygon in xDoc.DocumentElement)
+            {
+                if (xmlNode_polygon.Name == "interval")
+                {
+                    return xmlNode_polygon.Attributes["value"].Value;
+                }
+            }
+
+            return null;
         }
 
         public ObservableCollection<Resolution> ReadResolutions(string path)
@@ -93,7 +113,10 @@ namespace SetWallpapers.Model
                 {
                     foreach (XmlElement xmlElement_point in xmlNode_polygon.ChildNodes)
                     {
-                        resolutions.Add(new Resolution(){Value = xmlElement_point.Attributes["value"].Value });
+                        resolutions.Add(new Resolution(){
+                            Value = xmlElement_point.Attributes["value"].Value,
+                            Checked = Convert.ToBoolean(xmlElement_point.Attributes["chacked"].Value)
+                        });
                     }
                 }
             }
