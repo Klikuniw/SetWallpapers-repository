@@ -143,5 +143,30 @@ namespace SetWallpapers.Model
             return null;
         }
 
+        public void SaveChanges(string path, List<Category> categories, Resolution resolution, string interval)
+        {
+            int i = 0;
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+            foreach (XmlNode xmlNode in xDoc.DocumentElement)
+            {
+                if (xmlNode.Name == "categories")
+                {
+                    foreach (XmlElement xmlElement in xmlNode.ChildNodes)
+                    {
+                        xmlElement.Attributes["checked"].Value = categories[i].Checked.ToString();
+                    }
+
+                }
+                if (xmlNode.Name == "interval")
+                {
+                    xmlNode.Attributes["value"].Value = interval;
+                }
+                if (xmlNode.Name == "selectedResolution")
+                {
+                    xmlNode.Attributes["value"].Value = resolution.Value;
+                }
+            }
+        }
     }
 }
