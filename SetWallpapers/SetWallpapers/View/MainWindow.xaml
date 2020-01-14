@@ -64,7 +64,8 @@
                     >
             </ComboBox>
 
-            <Button Margin="10" Height="30" >Save Changes</Button>
+            <Button Margin="10" Height="30"
+                    Command="{Binding SaveChangesCommand}">Save Changes</Button>
 
         </StackPanel>
     </Grid>

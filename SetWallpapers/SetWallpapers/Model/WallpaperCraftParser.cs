@@ -156,6 +156,7 @@ namespace SetWallpapers.Model
                     foreach (XmlElement xmlElement in xmlNode.ChildNodes)
                     {
                         xmlElement.Attributes["checked"].Value = categories[i].Checked.ToString();
+                        i++;
                     }
 
                 }
@@ -168,6 +169,7 @@ namespace SetWallpapers.Model
                     xmlNode.Attributes["value"].Value = resolution.Value;
                 }
             }
+            xDoc.Save(path);
         }
     }
 }
