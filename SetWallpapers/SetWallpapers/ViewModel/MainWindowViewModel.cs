@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using SetWallpapers.Infrastructure;
 using System.Text;
 using System.Threading.Tasks;
 using SetWallpapers.Model;
-
+using System.Windows.Input;
+using System.Windows.Forms;
 namespace SetWallpapers.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
@@ -17,6 +18,33 @@ namespace SetWallpapers.ViewModel
         private Resolution _selectedResolution;
         private string _selectedInterval;
 
+        private ICommand _saveChangesCommand;
+        private ICommand _getResolutionCommand;
+
+        public ICommand SaveChangesCommand
+        {
+            get
+            {
+                if (_saveChangesCommand == null)
+                {
+                    _saveChangesCommand = new RelayCommand(ExecuteSaveChangesCommand);
+                }
+
+                return _saveChangesCommand;
+            }
+        }
+        public ICommand GetResolutionCommand
+        {
+            get
+            {
+                if (_getResolutionCommand == null)
+                {
+                    _getResolutionCommand = new RelayCommand(ExecuteGetResolutionCommand);
+                }
+
+                return _getResolutionCommand;
+            }
+        }
         public ObservableCollection<Category> Categories
         {
             get
@@ -34,8 +62,7 @@ namespace SetWallpapers.ViewModel
                 OnPropertyChanged("Categories");
             }
         }
-
-        public ObservableCollection<Resolution> Resolutions 
+        public ObservableCollection<Resolution> Resolutions
         {
             get
             {
@@ -47,20 +74,18 @@ namespace SetWallpapers.ViewModel
                 return _resolutions;
             }
         }
-
         public ObservableCollection<string> Intervals
         {
             get
             {
                 if (_intervals == null)
                 {
-                    _intervals = new ObservableCollection<string>(){"5 min","10 min","1 day"};
+                    _intervals = new ObservableCollection<string>() { "5 min", "10 min", "1 day" };
                 }
 
                 return _intervals;
             }
         }
-
         public Resolution SelectedResolution
         {
             get
@@ -78,7 +103,6 @@ namespace SetWallpapers.ViewModel
                 OnPropertyChanged("SelectedResolution");
             }
         }
-
         public string SelectedInterval
         {
             get
@@ -97,6 +121,15 @@ namespace SetWallpapers.ViewModel
             }
         }
 
+
+        private void ExecuteGetResolutionCommand(object obj)
+        {
+            SelectedResolution = new Resolution() { Value = String.Format("{0}x{1}", Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height) };
+        }
+        private void ExecuteSaveChangesCommand(object obj)
+        {
+            _parser.SaveChanges("wallpaperscraftInfo.xml", Categories.ToList(), SelectedResolution, SelectedInterval);
+        }
 
 
     }

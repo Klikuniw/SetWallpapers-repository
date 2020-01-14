@@ -34,7 +34,6 @@ namespace SetWallpapers.Model
 
             return null;
         }
-
         public List<string> ParseImages(string path)
         {
             List<string> hrefTags = new List<string>();
