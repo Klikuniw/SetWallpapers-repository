@@ -4,6 +4,7 @@ using System.Linq;
 using SetWallpapers.Infrastructure;
 using System.Text;
 using System.Threading.Tasks;
+using SetWallpapers.Infrastructure;
 using SetWallpapers.Model;
 using System.Windows.Input;
 using System.Drawing;
@@ -46,6 +47,18 @@ namespace SetWallpapers.ViewModel
                 return _getResolutionCommand;
             }
         }
+
+        private void ExecuteGetResolutionCommand(object obj)
+        {
+            SelectedResolution = new Resolution(){Value = String.Format("{0}x{1}", Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height) };
+        }
+        private void ExecuteSaveChangesCommand(object obj)
+        {
+            _parser.SaveChanges("wallpaperscraftInfo.xml",Categories.ToList(),SelectedResolution,SelectedInterval);
+        }
+
+
+
         public ObservableCollection<Category> Categories
         {
             get

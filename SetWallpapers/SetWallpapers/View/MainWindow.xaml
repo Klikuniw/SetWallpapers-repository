@@ -14,18 +14,16 @@
         <local:MainWindowViewModel></local:MainWindowViewModel>
     </Window.DataContext>
 
-
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+
+        <StackPanel>
+
+            <TextBlock FontSize="18" Margin="5,5">Select Categories</TextBlock>
 
             <ListBox Margin="5" Name="ListBoxCategories" ItemsSource="{Binding Path = Categories}">
 
@@ -40,43 +38,37 @@
 
             </ListBox>
 
-            <ComboBox Margin="5" Grid.Column="1" 
+        </StackPanel>
+
+
+
+        <StackPanel Grid.Column="1">
+
+            <WrapPanel VerticalAlignment="Center" Margin="5,0" Orientation="Horizontal">
+                <ComboBox Margin="5"
+                      materialdesign:HintAssist.Hint="Your Resolution"
                       ItemsSource="{Binding Path = Resolutions}"
                       SelectedValue="{Binding Path = SelectedResolution.Value}"
                       SelectedValuePath="Value"
                       DisplayMemberPath="Value"
-                     >
-            </ComboBox>
-        </Grid>
-
-        <Grid Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-
-            <WrapPanel VerticalAlignment="Center" Margin="5,0" Orientation="Horizontal">
-
-                <TextBlock VerticalAlignment="Center" Margin="0,0,10,0"  >Set interval:</TextBlock>
-
-                <ComboBox Width="100" Height="25"
-                          ItemsSource="{Binding Path = Intervals}"
-                          SelectedValue="{Binding Path = SelectedInterval}"
-                          >
+                >
                 </ComboBox>
+                <Button Command="{Binding GetResolutionCommand}">Auto</Button>
             </WrapPanel>
 
-            <Button Grid.Row="1" Height="30" Width="100">Save</Button>
+            <ComboBox Margin="10,0"
+                      HorizontalAlignment="Left"
+                      materialdesign:HintAssist.Hint="Interval"
+                      ItemsSource="{Binding Path = Intervals}"
+                      SelectedValue="{Binding Path = SelectedInterval}"
+                    >
+            </ComboBox>
 
-        </Grid>
+            <Button Margin="10" Height="30"
+                    Command="{Binding SaveChangesCommand}">Save Changes</Button>
 
-
-
-
-        
-
-
-
-
+        </StackPanel>
     </Grid>
+
+
 </Window>
