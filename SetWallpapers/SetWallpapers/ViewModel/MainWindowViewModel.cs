@@ -48,17 +48,6 @@ namespace SetWallpapers.ViewModel
             }
         }
 
-        private void ExecuteGetResolutionCommand(object obj)
-        {
-            SelectedResolution = new Resolution(){Value = String.Format("{0}x{1}", Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height) };
-        }
-        private void ExecuteSaveChangesCommand(object obj)
-        {
-            
-        }
-
-
-
         public ObservableCollection<Category> Categories
         {
             get
