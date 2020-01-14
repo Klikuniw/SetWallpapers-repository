@@ -54,7 +54,7 @@ namespace SetWallpapers.ViewModel
         }
         private void ExecuteSaveChangesCommand(object obj)
         {
-            _parser.SaveChanges("wallpaperscraftInfo.xml",Categories.ToList(),SelectedResolution,SelectedInterval);
+            
         }
 
 
