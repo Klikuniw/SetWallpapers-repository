@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SetWallpapers.Model;
 using System.Windows.Input;
+using System.Drawing;
 using System.Windows.Forms;
 namespace SetWallpapers.ViewModel
 {
