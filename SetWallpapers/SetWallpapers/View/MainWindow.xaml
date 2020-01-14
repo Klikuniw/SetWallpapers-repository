@@ -53,7 +53,7 @@
                       DisplayMemberPath="Value"
                 >
                 </ComboBox>
-                <Button>Auto</Button>
+                <Button Command="{Binding GetResolutionCommand}">Auto</Button>
             </WrapPanel>
 
             <ComboBox Margin="10,0"

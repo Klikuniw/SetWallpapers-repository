@@ -4,8 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SetWallpapers.Infrastructure;
 using SetWallpapers.Model;
-
+using System.Windows.Input;
+using System.Drawing;
+using System.Windows.Forms;
 namespace SetWallpapers.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
@@ -16,6 +19,45 @@ namespace SetWallpapers.ViewModel
         private ObservableCollection<string> _intervals;
         private Resolution _selectedResolution;
         private string _selectedInterval;
+
+        private ICommand _saveChangesCommand;
+        private ICommand _getResolutionCommand;
+
+        public ICommand SaveChangesCommand
+        {
+            get
+            {
+                if (_saveChangesCommand == null)
+                {
+                    _saveChangesCommand = new RelayCommand(ExecuteSaveChangesCommand);
+                }
+
+                return _saveChangesCommand;
+            }
+        }
+        public ICommand GetResolutionCommand
+        {
+            get
+            {
+                if (_getResolutionCommand == null)
+                {
+                    _getResolutionCommand = new RelayCommand(ExecuteGetResolutionCommand);
+                }
+
+                return _getResolutionCommand;
+            }
+        }
+
+        private void ExecuteGetResolutionCommand(object obj)
+        {
+            SelectedResolution = new Resolution(){Value = String.Format("{0}x{1}", Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height) };
+        }
+        private void ExecuteSaveChangesCommand(object obj)
+        {
+            
+        }
+
+
 
         public ObservableCollection<Category> Categories
         {
