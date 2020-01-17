@@ -41,8 +41,6 @@
 
         </StackPanel>
 
-
-
         <StackPanel Grid.Column="1">
 
             <WrapPanel VerticalAlignment="Center" Margin="5,0" Orientation="Horizontal">
@@ -67,6 +65,10 @@
 
             <Button Margin="10" Height="30" Command="{Binding SaveChangesCommand}" >Save Changes</Button>
 
+            <WrapPanel Margin="10,0">
+                <TextBlock>Time to next wallpaper:</TextBlock>
+                <TextBlock Margin="5,0,0,0" Name="TimeToChangeTextBox" Text="{Binding Time}"></TextBlock>
+            </WrapPanel>
         </StackPanel>
     </Grid>
 
