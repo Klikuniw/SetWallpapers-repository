@@ -2,12 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using SetWallpapers.Infrastructure;
-using System.Text;
-using System.Threading.Tasks;
-using SetWallpapers.Infrastructure;
 using SetWallpapers.Model;
 using System.Windows.Input;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Threading;
 
@@ -24,7 +20,6 @@ namespace SetWallpapers.ViewModel
         private TimeSpan _time;
 
         private readonly DispatcherTimer _dispatcherTimerShowTime = new DispatcherTimer();
-        private readonly DispatcherTimer _dispatcherTimerExecuteMethod = new DispatcherTimer();
 
         private ICommand _saveChangesCommand;
         private ICommand _getResolutionCommand;
@@ -144,36 +139,26 @@ namespace SetWallpapers.ViewModel
 
         private void ExecuteGetResolutionCommand(object obj)
         {
-            SelectedResolution = new Resolution() { Value = String.Format("{0}x{1}", Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height) };
+            SelectedResolution = new Resolution() { 
+                Value = $"{Screen.PrimaryScreen.Bounds.Width}x{Screen.PrimaryScreen.Bounds.Height}"};
         }
         private void ExecuteSaveChangesCommand(object obj)
         {
             _parser.SaveChanges("wallpaperscraftInfo.xml", Categories.ToList(), SelectedResolution, SelectedInterval);
 
-            _dispatcherTimerShowTime.Tick += new EventHandler(dispatcherTimer_Tick);
+            _dispatcherTimerShowTime.Tick += dispatcherTimer_Tick;
             _dispatcherTimerShowTime.Interval = new TimeSpan(0,0,0,1);
             
-            _dispatcherTimerExecuteMethod.Tick+= new EventHandler(Show);
-            _dispatcherTimerExecuteMethod.Interval = ToTimeSpan(SelectedInterval);
-
-
-
-            Time = _dispatcherTimerExecuteMethod.Interval;
+            Time = ToTimeSpan(SelectedInterval);
             _dispatcherTimerShowTime.Start();
-            _dispatcherTimerExecuteMethod.Start();
-
-        }
-
-        private void Show(object sender, EventArgs e)
-        {
-            MessageBox.Show("sdasd");
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             if (Time.Equals(new TimeSpan(0,0,0)))
             {
-                Time = _dispatcherTimerExecuteMethod.Interval;
+                Wallpaper.Set(new Uri(_parser.ParseImage(Categories[0], SelectedResolution)), Wallpaper.Style.Centered);
+                Time = ToTimeSpan(SelectedInterval);
             }
             else
             {
@@ -186,7 +171,7 @@ namespace SetWallpapers.ViewModel
         {
             TimeSpan res = new TimeSpan(0, 0, 0);
 
-            var value = SelectedInterval.Split(' ');
+            var value = time.Split(' ');
             switch (value[1])
             {
                 case "min":
