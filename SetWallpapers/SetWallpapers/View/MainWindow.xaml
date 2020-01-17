@@ -8,13 +8,14 @@
         mc:Ignorable="d"
         Title="SetWallpaper" Height="450" Width="400" WindowStartupLocation="CenterScreen">
 
-
+    
 
     <Window.DataContext>
         <local:MainWindowViewModel></local:MainWindowViewModel>
     </Window.DataContext>
 
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
