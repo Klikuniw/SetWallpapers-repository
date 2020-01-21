@@ -87,10 +87,12 @@
     </Compile>
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\IFileService.cs" />
     <Compile Include="Model\IWallpaperParser.cs" />
     <Compile Include="Model\Resolution.cs" />
     <Compile Include="Model\Wallpaper.cs" />
     <Compile Include="Model\WallpaperCraftParser.cs" />
+    <Compile Include="Model\XmlFileService.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\MainWindow.xaml.cs">

@@ -12,6 +12,8 @@ namespace SetWallpapers.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly WallpaperCraftParser _parser = new WallpaperCraftParser();
+        private readonly XmlFileService _xmlFileService = new XmlFileService();
+
         private ObservableCollection<Category> _categories;
         private ObservableCollection<Resolution> _resolutions;
         private ObservableCollection<string> _intervals;
@@ -55,7 +57,7 @@ namespace SetWallpapers.ViewModel
             {
                 if (_categories == null)
                 {
-                    _categories = _parser.ReadCategories("wallpaperscraftInfo.xml");
+                    _categories = _xmlFileService.ReadCategories("wallpaperscraftInfo.xml");
                 }
 
                 return _categories;
@@ -72,7 +74,7 @@ namespace SetWallpapers.ViewModel
             {
                 if (_resolutions == null)
                 {
-                    _resolutions = _parser.ReadResolutions("wallpaperscraftInfo.xml");
+                    _resolutions = _xmlFileService.ReadResolutions("wallpaperscraftInfo.xml");
                 }
 
                 return _resolutions;
@@ -96,7 +98,7 @@ namespace SetWallpapers.ViewModel
             {
                 if (_selectedResolution == null)
                 {
-                    _selectedResolution = _parser.ReadSelectedResolution("wallpaperscraftInfo.xml");
+                    _selectedResolution = _xmlFileService.ReadSelectedResolution("wallpaperscraftInfo.xml");
                 }
 
                 return _selectedResolution;
@@ -113,7 +115,7 @@ namespace SetWallpapers.ViewModel
             {
                 if (_selectedInterval == null)
                 {
-                    _selectedInterval = _parser.ReadInterval("wallpaperscraftInfo.xml");
+                    _selectedInterval = _xmlFileService.ReadInterval("wallpaperscraftInfo.xml");
                 }
 
                 return _selectedInterval;
@@ -144,7 +146,7 @@ namespace SetWallpapers.ViewModel
         }
         private void ExecuteSaveChangesCommand(object obj)
         {
-            _parser.SaveChanges("wallpaperscraftInfo.xml", Categories.ToList(), SelectedResolution, SelectedInterval);
+            _xmlFileService.SaveChanges("wallpaperscraftInfo.xml", Categories.ToList(), SelectedResolution, SelectedInterval);
 
             _dispatcherTimerShowTime.Tick += dispatcherTimer_Tick;
             _dispatcherTimerShowTime.Interval = new TimeSpan(0,0,0,1);

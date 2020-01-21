@@ -13,10 +13,6 @@ namespace SetWallpapers.Model
         string ParseImage(Category path,Resolution resolution);
         string ParseImage(List<string> path, Resolution resolution);
 
-        ObservableCollection<Category> ReadCategories(string path);
-        ObservableCollection<Resolution> ReadResolutions(string path);
-        Resolution ReadSelectedResolution(string path);
-        string ReadInterval(string path);
         string ToLink(string website, Category category, Resolution resolution, string page="");
     }
 }
