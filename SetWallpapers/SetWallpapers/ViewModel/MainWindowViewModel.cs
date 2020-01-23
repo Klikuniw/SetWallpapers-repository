@@ -98,7 +98,7 @@ namespace SetWallpapers.ViewModel
             {
                 if (_selectedResolution == null)
                 {
-                    _selectedResolution = _xmlFileService.ReadSelectedResolution("wallpaperscraftInfo.xml");
+                    _selectedResolution = _xmlFileService.ReadSelectedResolution("settings.xml");
                 }
 
                 return _selectedResolution;
@@ -115,7 +115,7 @@ namespace SetWallpapers.ViewModel
             {
                 if (_selectedInterval == null)
                 {
-                    _selectedInterval = _xmlFileService.ReadInterval("wallpaperscraftInfo.xml");
+                    _selectedInterval = _xmlFileService.ReadInterval("settings.xml");
                 }
 
                 return _selectedInterval;
@@ -146,13 +146,15 @@ namespace SetWallpapers.ViewModel
         }
         private void ExecuteSaveChangesCommand(object obj)
         {
-            _xmlFileService.SaveChanges("wallpaperscraftInfo.xml", Categories.ToList(), SelectedResolution, SelectedInterval);
+            _xmlFileService.SaveUserInfoChanges("wallpaperscraftInfo.xml", Categories.ToList());
+            _xmlFileService.SaveSettingChanges("settings.xml", SelectedInterval,_time,SelectedResolution);
 
-            _dispatcherTimerShowTime.Tick += dispatcherTimer_Tick;
-            _dispatcherTimerShowTime.Interval = new TimeSpan(0,0,0,1);
-            
-            Time = ToTimeSpan(SelectedInterval);
-            _dispatcherTimerShowTime.Start();
+
+            //_dispatcherTimerShowTime.Tick += dispatcherTimer_Tick;
+            //_dispatcherTimerShowTime.Interval = new TimeSpan(0,0,0,1);
+            //
+            //Time = ToTimeSpan(SelectedInterval);
+            //_dispatcherTimerShowTime.Start();
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)

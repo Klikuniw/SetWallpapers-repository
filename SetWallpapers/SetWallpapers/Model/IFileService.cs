@@ -14,7 +14,9 @@ namespace SetWallpapers.Model
         Resolution ReadSelectedResolution(string path);
         string ReadInterval(string path);
         TimeSpan ReadClosingTime(string path);
-        void SaveChanges(string path, List<Category> categories, Resolution resolution, string interval);
+        void SaveSettingChanges(string path, string interval,TimeSpan closingTime,Resolution resolution);
+        void SaveUserInfoChanges(string path, List<Category> categories);
+
     }
 
 }

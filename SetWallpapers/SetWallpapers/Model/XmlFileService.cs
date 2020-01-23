@@ -38,7 +38,20 @@ namespace SetWallpapers.Model
 
         public TimeSpan ReadClosingTime(string path)
         {
-            throw new NotImplementedException();
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+
+            TimeSpan time = new TimeSpan();
+
+            foreach (XmlNode xmlNode_polygon in xDoc.DocumentElement)
+            {
+                if (xmlNode_polygon.Name == "interval")
+                {
+                    //time = xmlNode_polygon.Attributes["value"].Value;
+                }
+            }
+
+            return time;
         }
 
         public string ReadInterval(string path)
@@ -93,7 +106,29 @@ namespace SetWallpapers.Model
             return null;
         }
 
-        public void SaveChanges(string path, List<Category> categories, Resolution resolution, string interval)
+        public void SaveSettingChanges(string path, string interval, TimeSpan closingTime, Resolution selectedResolution)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+            foreach (XmlNode xmlNode in xDoc.DocumentElement)
+            {
+                if (xmlNode.Name == "interval")
+                {
+                    xmlNode.Attributes["value"].Value = interval;
+                }
+                if (xmlNode.Name == "closingTime")
+                {
+                    xmlNode.Attributes["value"].Value = closingTime.ToString();
+                }
+                if (xmlNode.Name == "selectedResolution")
+                {
+                    xmlNode.Attributes["value"].Value = selectedResolution.Value;
+                }
+            }
+            xDoc.Save(path);
+        }
+
+        public void SaveUserInfoChanges(string path, List<Category> categories)
         {
             int i = 0;
             XmlDocument xDoc = new XmlDocument();
@@ -107,15 +142,6 @@ namespace SetWallpapers.Model
                         xmlElement.Attributes["checked"].Value = categories[i].Checked.ToString();
                         i++;
                     }
-
-                }
-                if (xmlNode.Name == "interval")
-                {
-                    xmlNode.Attributes["value"].Value = interval;
-                }
-                if (xmlNode.Name == "selectedResolution")
-                {
-                    xmlNode.Attributes["value"].Value = resolution.Value;
                 }
             }
             xDoc.Save(path);
