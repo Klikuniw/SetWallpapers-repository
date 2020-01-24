@@ -13,10 +13,16 @@ namespace SetWallpapers.Model
         ObservableCollection<Resolution> ReadResolutions(string path);
         Resolution ReadSelectedResolution(string path);
         string ReadInterval(string path);
-        TimeSpan ReadClosingTime(string path);
-        void SaveSettingChanges(string path, string interval,TimeSpan closingTime,Resolution resolution);
+        DateTime ReadClosingTime(string path);
+        TimeSpan ReadRemainsIntervalTime(string path);
+        bool ReadTimerStarted(string path);
+
+        void SaveSettingChanges(string path, string interval,DateTime closingTime,Resolution resolution);
         void SaveUserInfoChanges(string path, List<Category> categories);
 
+        void WriteClosingTime(string path, DateTime time);
+        void WriteRemainsIntervalTime(string path, TimeSpan time);
+        void WriteTimerStarted(string path,bool value);
     }
 
 }

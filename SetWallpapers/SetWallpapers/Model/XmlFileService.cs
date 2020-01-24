@@ -16,17 +16,17 @@ namespace SetWallpapers.Model
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(path);
-            foreach (XmlNode xmlNode_polygon in xDoc.DocumentElement)
+            foreach (XmlNode xmlNodePolygon in xDoc.DocumentElement)
             {
-                if (xmlNode_polygon.Name == "categories")
+                if (xmlNodePolygon.Name == "categories")
                 {
-                    foreach (XmlElement xmlElement_point in xmlNode_polygon.ChildNodes)
+                    foreach (XmlElement xmlNode in xmlNodePolygon.ChildNodes)
                     {
                         categories.Add(new Category()
                         {
-                            Name = xmlElement_point.Attributes["name"].Value,
-                            Tag = xmlElement_point.Attributes["tag"].Value,
-                            Checked = Convert.ToBoolean(xmlElement_point.Attributes["checked"].Value)
+                            Name = xmlNode.Attributes["name"].Value,
+                            Tag = xmlNode.Attributes["tag"].Value,
+                            Checked = Convert.ToBoolean(xmlNode.Attributes["checked"].Value)
                         });
                     }
 
@@ -36,18 +36,18 @@ namespace SetWallpapers.Model
             return categories;
         }
 
-        public TimeSpan ReadClosingTime(string path)
+        public DateTime ReadClosingTime(string path)
         {
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(path);
 
-            TimeSpan time = new TimeSpan();
+            DateTime time = new DateTime();
 
-            foreach (XmlNode xmlNode_polygon in xDoc.DocumentElement)
+            foreach (XmlNode xmlNode in xDoc.DocumentElement)
             {
-                if (xmlNode_polygon.Name == "interval")
+                if (xmlNode.Name == "closingTime")
                 {
-                    //time = xmlNode_polygon.Attributes["value"].Value;
+                    time = Convert.ToDateTime(xmlNode.Attributes["value"].Value);
                 }
             }
 
@@ -58,14 +58,30 @@ namespace SetWallpapers.Model
         {
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(path);
-            foreach (XmlNode xmlNode_polygon in xDoc.DocumentElement)
+            foreach (XmlNode xmlNode in xDoc.DocumentElement)
             {
-                if (xmlNode_polygon.Name == "interval")
+                if (xmlNode.Name == "interval")
                 {
-                    return xmlNode_polygon.Attributes["value"].Value;
+                    return xmlNode.Attributes["value"].Value;
                 }
             }
             return null;
+        }
+
+        public TimeSpan ReadRemainsIntervalTime(string path)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+
+
+            foreach (XmlNode xmlNode in xDoc.DocumentElement)
+            {
+                if (xmlNode.Name == "interval")
+                {
+                    return TimeSpan.Parse(xmlNode.Attributes["remains"].Value);
+                }
+            }
+            return new TimeSpan(0, 0, 0);
         }
 
         public ObservableCollection<Resolution> ReadResolutions(string path)
@@ -74,11 +90,11 @@ namespace SetWallpapers.Model
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(path);
-            foreach (XmlNode xmlNode_polygon in xDoc.DocumentElement)
+            foreach (XmlNode xmlNode in xDoc.DocumentElement)
             {
-                if (xmlNode_polygon.Name == "resolutions")
+                if (xmlNode.Name == "resolutions")
                 {
-                    foreach (XmlElement xmlElement_point in xmlNode_polygon.ChildNodes)
+                    foreach (XmlElement xmlElement_point in xmlNode.ChildNodes)
                     {
                         resolutions.Add(new Resolution()
                         {
@@ -95,18 +111,33 @@ namespace SetWallpapers.Model
         {
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(path);
-            foreach (XmlNode xmlNode_polygon in xDoc.DocumentElement)
+            foreach (XmlNode xmlNode in xDoc.DocumentElement)
             {
-                if (xmlNode_polygon.Name == "selectedResolution")
+                if (xmlNode.Name == "selectedResolution")
                 {
-                    return new Resolution() { Value = xmlNode_polygon.Attributes["value"].Value };
+                    return new Resolution() { Value = xmlNode.Attributes["value"].Value };
                 }
             }
 
             return null;
         }
 
-        public void SaveSettingChanges(string path, string interval, TimeSpan closingTime, Resolution selectedResolution)
+        public bool ReadTimerStarted(string path)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+
+            foreach (XmlNode xmlNode in xDoc.DocumentElement)
+            {
+                if (xmlNode.Name == "timerStarted")
+                {
+                    return Convert.ToBoolean(xmlNode.Attributes["value"].Value);
+                }
+            }
+            return false;
+        }
+
+        public void SaveSettingChanges(string path, string interval, DateTime closingTime, Resolution selectedResolution)
         {
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(path);
@@ -142,6 +173,49 @@ namespace SetWallpapers.Model
                         xmlElement.Attributes["checked"].Value = categories[i].Checked.ToString();
                         i++;
                     }
+                }
+            }
+            xDoc.Save(path);
+        }
+
+        public void WriteClosingTime(string path, DateTime time)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+            foreach (XmlNode xmlNode in xDoc.DocumentElement)
+            {
+                if (xmlNode.Name == "closingTime")
+                {
+                    xmlNode.Attributes["value"].Value = time.ToString();
+                }
+            }
+            xDoc.Save(path);
+        }
+
+        public void WriteRemainsIntervalTime(string path, TimeSpan time)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+            foreach (XmlNode xmlNode in xDoc.DocumentElement)
+            {
+                if (xmlNode.Name == "interval")
+                {
+                    xmlNode.Attributes["remains"].Value = time.ToString();
+                }
+            }
+            xDoc.Save(path);
+        }
+
+        public void WriteTimerStarted(string path, bool value)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(path);
+
+            foreach (XmlNode xmlNode in xDoc.DocumentElement)
+            {
+                if (xmlNode.Name == "timerStarted")
+                {
+                    xmlNode.Attributes["value"].Value = value.ToString();
                 }
             }
             xDoc.Save(path);

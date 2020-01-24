@@ -5,10 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SetWallpapers.ViewModel"
         xmlns:materialdesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+
         mc:Ignorable="d"
         Title="SetWallpaper" Height="450" Width="400" WindowStartupLocation="CenterScreen">
 
-    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding ClosingWindowCommand}" />
+        </i:EventTrigger>
+
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding StartedWindowCommand}" />
+        </i:EventTrigger>
+
+    </i:Interaction.Triggers>
+
+
 
     <Window.DataContext>
         <local:MainWindowViewModel></local:MainWindowViewModel>

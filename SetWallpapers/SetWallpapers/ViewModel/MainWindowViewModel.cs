@@ -25,6 +25,8 @@ namespace SetWallpapers.ViewModel
 
         private ICommand _saveChangesCommand;
         private ICommand _getResolutionCommand;
+        private ICommand _closingWindowCommand;
+        private ICommand _startedWindowCommand;
 
         public ICommand SaveChangesCommand
         {
@@ -50,7 +52,32 @@ namespace SetWallpapers.ViewModel
                 return _getResolutionCommand;
             }
         }
+        public ICommand ClosingWindowCommand
+        {
+            get
+            {
+                if (_closingWindowCommand == null)
+                {
+                    _closingWindowCommand = new RelayCommand(ExecuteClosingWindowCommand);
+                }
 
+                return _closingWindowCommand;
+            }
+        }
+        public ICommand StartedWindowCommand
+        {
+            get
+            {
+                if (_startedWindowCommand == null)
+                {
+                    _startedWindowCommand = new RelayCommand(ExecuteStartedWindowCommand);
+                }
+
+                return _startedWindowCommand;
+            }
+        }
+
+        
         public ObservableCollection<Category> Categories
         {
             get
@@ -147,22 +174,34 @@ namespace SetWallpapers.ViewModel
         private void ExecuteSaveChangesCommand(object obj)
         {
             _xmlFileService.SaveUserInfoChanges("wallpaperscraftInfo.xml", Categories.ToList());
-            _xmlFileService.SaveSettingChanges("settings.xml", SelectedInterval,_time,SelectedResolution);
+            _xmlFileService.SaveSettingChanges("settings.xml", SelectedInterval,DateTime.Now, SelectedResolution);
 
-
-            //_dispatcherTimerShowTime.Tick += dispatcherTimer_Tick;
-            //_dispatcherTimerShowTime.Interval = new TimeSpan(0,0,0,1);
-            //
-            //Time = ToTimeSpan(SelectedInterval);
-            //_dispatcherTimerShowTime.Start();
+            _dispatcherTimerShowTime.Tick += dispatcherTimer_Tick;
+            _dispatcherTimerShowTime.Interval = new TimeSpan(0,0,0,1);
+            
+            Time = ConverterTime.ToTimeSpan(SelectedInterval);
+            _dispatcherTimerShowTime.Start();
         }
+        private void ExecuteClosingWindowCommand(object obj)
+        {
+            _xmlFileService.WriteRemainsIntervalTime("settings.xml",Time);   
+        }
+        private void ExecuteStartedWindowCommand(object obj)
+        {
+            _dispatcherTimerShowTime.Tick += dispatcherTimer_Tick;
+            _dispatcherTimerShowTime.Interval = new TimeSpan(0, 0, 0, 1);
+
+            Time = _xmlFileService.ReadRemainsIntervalTime("settings.xml");
+            _dispatcherTimerShowTime.Start();
+        }
+
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             if (Time.Equals(new TimeSpan(0,0,0)))
             {
                 Wallpaper.Set(new Uri(_parser.ParseImage(Categories[0], SelectedResolution)), Wallpaper.Style.Centered);
-                Time = ToTimeSpan(SelectedInterval);
+                Time = ConverterTime.ToTimeSpan(SelectedInterval);
             }
             else
             {
@@ -171,31 +210,5 @@ namespace SetWallpapers.ViewModel
             
         }
 
-        private TimeSpan ToTimeSpan(string time)
-        {
-            TimeSpan res = new TimeSpan(0, 0, 0);
-
-            var value = time.Split(' ');
-            switch (value[1])
-            {
-                case "min":
-                {
-                    res = new TimeSpan(0, Convert.ToInt32(value[0]),0);
-                    break;
-                }
-                case "day":
-                {
-                    res = new TimeSpan(Convert.ToInt32(value[0]),0,0, 0);
-                        break;
-                }
-                case "sec":
-                {
-                    res = new TimeSpan(0, 0, 0, Convert.ToInt32(value[0]));
-                    break;
-                }
-            }
-
-            return res;
-        }
     }
 }
