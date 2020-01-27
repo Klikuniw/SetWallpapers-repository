@@ -55,20 +55,118 @@
             </TabItem>
 
             <TabItem Header="SETTINGS">
-                <ListBox Margin="5" Name="ListBoxCategories" ItemsSource="{Binding Path = Categories}">
 
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Vertical">
-                                <CheckBox Content="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"
-                                          IsChecked="{Binding Path = Checked,Mode=TwoWay}"></CheckBox>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-                </ListBox>
+                    <GroupBox Margin="5" Header="Categories" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <ListBox Name="ListBoxCategories" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ItemsSource="{Binding Path = Categories}">
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Content="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"
+                                                  IsChecked="{Binding Path = Checked,Mode=TwoWay}"></CheckBox>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True" Orientation="Horizontal"  />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+
+                        </ListBox>
+                    </GroupBox>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <GroupBox Header="Resolution" Margin="5" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                            <WrapPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                <ComboBox 
+                                    Width="80"
+                                    ItemsSource="{Binding Path = Resolutions}"
+                                          SelectedValue="{Binding Path = SelectedResolution.Value}"
+                                          SelectedValuePath="Value"
+                                          DisplayMemberPath="Value"
+                                >
+                                </ComboBox>
+                                <Button Margin="10 0 0 0"  Command="{Binding GetResolutionCommand}" FontSize="12">Auto</Button>
+                            </WrapPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Interval" Grid.Column="1" Margin="5" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                            <ComboBox Margin="10,0"
+                                      HorizontalAlignment="Left"
+                                      Width="70"
+                                      ItemsSource="{Binding Path = Intervals}"
+                                      SelectedValue="{Binding Path = SelectedInterval}"
+                            >
+                            </ComboBox>
+                        </GroupBox>
+
+                    </Grid>
+
+                    <Button Grid.Row="2" Width="80">Save</Button>
+                    <!--<Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ListBox Margin="5" Name="ListBoxCategories" ItemsSource="{Binding Path = Categories}">
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <CheckBox Content="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"
+                                              IsChecked="{Binding Path = Checked,Mode=TwoWay}"></CheckBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                    </ListBox>
+
+                    <StackPanel Grid.Column="1">
+
+                        <WrapPanel VerticalAlignment="Center" Margin="5,0" Orientation="Horizontal">
+                            <ComboBox Margin="5"
+                                      materialdesign:HintAssist.Hint="Resolutions"
+                                      ItemsSource="{Binding Path = Resolutions}"
+                                      SelectedValue="{Binding Path = SelectedResolution.Value}"
+                                      SelectedValuePath="Value"
+                                      DisplayMemberPath="Value"
+                            >
+                            </ComboBox>
+                            <Button Margin="5,0,0,0" Command="{Binding GetResolutionCommand}" FontSize="12">Auto</Button>
+                        </WrapPanel>
+
+                        <ComboBox Margin="10,0"
+                                  HorizontalAlignment="Left"
+                                  materialdesign:HintAssist.Hint="Interval"
+                                  ItemsSource="{Binding Path = Intervals}"
+                                  SelectedValue="{Binding Path = SelectedInterval}"
+                        >
+                        </ComboBox>
+
+                        <Button Margin="10" Height="30" Command="{Binding SaveChangesCommand}" >Save Changes</Button>
+
+                    </StackPanel>-->
+
+                </Grid>
+
             </TabItem>
-            
+
             <TabItem>
                 <TabItem.Header>
                     <materialdesign:PackIcon Kind="GithubCircle" Foreground="{DynamicResource PrimaryHueLightBrush}"/>
@@ -136,7 +234,7 @@
 
 
 
-        
+
 
 
 
