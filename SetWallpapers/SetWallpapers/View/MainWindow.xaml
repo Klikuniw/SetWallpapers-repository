@@ -54,7 +54,21 @@
             </dragablz:TabablzControl.InterTabController>
 
             <TabItem Header="HOME" >
-                <TextBlock Text="Hello World!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <StackPanel Orientation="Vertical">
+
+                    <GroupBox Margin="5" Header="Status" 
+                              Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <WrapPanel>
+                            <TextBlock FontSize="16" FontWeight="DemiBold">Working</TextBlock>
+                        </WrapPanel>
+                        
+                    </GroupBox>
+
+                    <WrapPanel Margin="5">
+                        <TextBlock>Time to next wallpaper:</TextBlock>
+                        <TextBlock Margin="5 0 0 0"></TextBlock>
+                    </WrapPanel>
+                </StackPanel>
             </TabItem>
 
             <TabItem Header="SETTINGS">
@@ -133,7 +147,7 @@
             </TabItem>
 
             <TabItem Header="ABOUT">
-
+                <TextBlock>Igor Klikun</TextBlock>
             </TabItem>
 
         </dragablz:TabablzControl>
