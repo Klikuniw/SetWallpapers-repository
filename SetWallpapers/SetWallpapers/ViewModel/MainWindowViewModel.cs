@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using SetWallpapers.Infrastructure;
 using SetWallpapers.Model;
 using System.Windows.Input;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Threading;
 
 namespace SetWallpapers.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        #region Private Variables
+
         private readonly WallpaperCraftParser _parser = new WallpaperCraftParser();
         private readonly XmlFileService _xmlFileService = new XmlFileService();
 
@@ -23,10 +27,21 @@ namespace SetWallpapers.ViewModel
 
         private readonly DispatcherTimer _dispatcherTimerShowTime = new DispatcherTimer();
 
+        #endregion
+
+        #region Private commands
+
         private ICommand _saveChangesCommand;
         private ICommand _getResolutionCommand;
         private ICommand _closingWindowCommand;
         private ICommand _startedWindowCommand;
+        private ICommand _closeAppCommand;
+        private ICommand _hideAppCommand;
+
+        #endregion
+
+
+        #region Public command properties
 
         public ICommand SaveChangesCommand
         {
@@ -76,8 +91,35 @@ namespace SetWallpapers.ViewModel
                 return _startedWindowCommand;
             }
         }
+        public ICommand CloseAppCommand
+        {
+            get
+            {
+                if (_closeAppCommand == null)
+                {
+                    _closeAppCommand = new RelayCommand(ExecuteCloseAppCommand);
+                }
 
-        
+                return _closeAppCommand;
+            }
+        }
+        public ICommand HideAppCommand
+        {
+            get
+            {
+                if (_hideAppCommand == null)
+                {
+                    _hideAppCommand = new RelayCommand(ExecuteHideAppCommand);
+                }
+
+                return _hideAppCommand;
+            }
+        }
+
+        #endregion
+
+        #region Public properties
+
         public ObservableCollection<Category> Categories
         {
             get
@@ -113,7 +155,7 @@ namespace SetWallpapers.ViewModel
             {
                 if (_intervals == null)
                 {
-                    _intervals = new ObservableCollection<string>() { "5 sec","5 min", "10 min", "1 day" };
+                    _intervals = new ObservableCollection<string>() { "5 sec", "5 min", "10 min", "1 day" };
                 }
 
                 return _intervals;
@@ -166,6 +208,25 @@ namespace SetWallpapers.ViewModel
             }
         }
 
+        #endregion
+
+
+        private void ExecuteHideAppCommand(object obj)
+        {
+            if ((obj as Window) != null)
+            {
+                (obj as Window).Hide();
+            }
+        }
+        private void ExecuteCloseAppCommand(object obj)
+        {
+            if ((obj as Window) != null)
+            {
+                (obj as Window).Close();
+            }
+        }
+
+        
         private void ExecuteGetResolutionCommand(object obj)
         {
             SelectedResolution = new Resolution() { 
