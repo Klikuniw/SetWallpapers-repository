@@ -25,24 +25,29 @@ namespace SetWallpapers
         {
             XmlFileService service = new XmlFileService();
 
-            //зчитую час який звлишився до зміни картинки
-            TimeSpan remains = DateTime.Now.Subtract(service.ReadClosingTime("settings.xml"));
-
-            //перевірка чи пройшов час до зміни картинки
-            if (remains.TotalSeconds - service.ReadRemainsIntervalTime("settings.xml").TotalSeconds >= 0)
+            if (service.ReadTimerStarted("settings.xml"))
             {
-                //змінюю картинку
-                WallpaperCraftParser parser = new WallpaperCraftParser();
-                Wallpaper.Set(new Uri(parser.ParseImage(service.ReadCategories("wallpaperscraftInfo.xml")[0], service.ReadSelectedResolution("settings.xml"))), Wallpaper.Style.Centered);
+                //зчитую час який звлишився до зміни картинки
+                TimeSpan remains = DateTime.Now.Subtract(service.ReadClosingTime("settings.xml"));
 
-                //поновлюю час який залишвся на початковий
-                service.WriteRemainsIntervalTime("settings.xml", ConverterTime.ToTimeSpan(service.ReadInterval("settings.xml")));
+                //перевірка чи пройшов час до зміни картинки
+                if (remains.TotalSeconds - service.ReadRemainsIntervalTime("settings.xml").TotalSeconds >= 0)
+                {
+                    //змінюю картинку
+                    WallpaperCraftParser parser = new WallpaperCraftParser();
+                    Wallpaper.Set(new Uri(parser.ParseImage(service.ReadCategories("wallpaperscraftInfo.xml")[0], service.ReadSelectedResolution("settings.xml"))), Wallpaper.Style.Centered);
+
+                    //поновлюю час який залишвся на початковий
+                    service.WriteRemainsIntervalTime("settings.xml", ConverterTime.ToTimeSpan(service.ReadInterval("settings.xml")));
+                }
+                else
+                {
+                    //поновлюю час який залишвся
+                    service.WriteRemainsIntervalTime("settings.xml", new TimeSpan(0, 0, Math.Abs((int)(remains.TotalSeconds - service.ReadRemainsIntervalTime("settings.xml").TotalSeconds))));
+                }
             }
-            else
-            {
-                //поновлюю час який залишвся
-                service.WriteRemainsIntervalTime("settings.xml", new TimeSpan(0,0, Math.Abs((int) (remains.TotalSeconds - service.ReadRemainsIntervalTime("settings.xml").TotalSeconds))));
-            }
+
+
         }
     }
 }

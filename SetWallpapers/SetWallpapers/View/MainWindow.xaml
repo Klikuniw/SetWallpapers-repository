@@ -86,8 +86,9 @@
 
                     <WrapPanel Margin="5">
                         <TextBlock>Time to next wallpaper:</TextBlock>
-                        <TextBlock Margin="5 0 0 0"></TextBlock>
+                        <TextBlock Margin="5 0 0 0" Text="{Binding Time}"></TextBlock>
                     </WrapPanel>
+
                 </StackPanel>
             </TabItem>
 

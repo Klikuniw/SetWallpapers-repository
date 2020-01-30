@@ -245,7 +245,8 @@ namespace SetWallpapers.ViewModel
         }
         private void ExecuteClosingWindowCommand(object obj)
         {
-            _xmlFileService.WriteRemainsIntervalTime("settings.xml",Time);   
+            _xmlFileService.WriteRemainsIntervalTime("settings.xml",Time);
+            _xmlFileService.WriteTimerStarted("settings.xml", false);
         }
         private void ExecuteStartedWindowCommand(object obj)
         {
