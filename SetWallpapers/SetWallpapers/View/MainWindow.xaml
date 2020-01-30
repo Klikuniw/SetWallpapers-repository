@@ -38,31 +38,26 @@
 
         <!--Header-->
         <Grid Background="#2196f3">
-            <TextBlock HorizontalAlignment="Left" FontSize="24" 
-                       VerticalAlignment="Center"
-                       Margin="10,10,0,8" 
+            <Image HorizontalAlignment="Left" Source="../Images/AppIcon.ico" Margin="10,10,0,5" Width="40"></Image>
+
+            <TextBlock HorizontalAlignment="Left" FontSize="22" 
+                       VerticalAlignment="Bottom"
+                       Margin="55,0,0,5" 
                        Foreground="White"
-                       FontStyle="Italic"
-                       >SetWallpapers</TextBlock>
+                       FontStyle="Italic" Height="31"
+            >SetWallpapers</TextBlock>
 
             <Button HorizontalAlignment="Right" x:Name="ButtonClose" 
                     Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                     Width="30" Height="30"
-                    Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,10,10,10"
-                    Command="{Binding CloseAppCommand, Mode=OneWay}"
-                    CommandParameter="{Binding ElementName = GeneralWindow}"
-                    >
-
+                    Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,15,10,5">
                 <materialdesign:PackIcon Kind="Power" />
             </Button>
 
             <Button HorizontalAlignment="Right" 
                     Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                     Width="30" Height="30"
-                    Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,10,40,10" 
-                    Command="{Binding HideAppCommand, Mode=OneWay}"
-                    CommandParameter="{Binding ElementName = GeneralWindow}"
-                    >
+                    Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,15,40,5" >
                 <materialdesign:PackIcon Kind="WindowMinimize" />
             </Button>
         </Grid>
