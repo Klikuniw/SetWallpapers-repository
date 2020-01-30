@@ -162,7 +162,7 @@
             </TabItem>
 
             <TabItem Header="ABOUT">
-                <TextBlock>Igor Klikun</TextBlock>
+
             </TabItem>
 
         </dragablz:TabablzControl>
