@@ -36,15 +36,27 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>wallpaper_104165.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AngleSharp, Version=0.13.0.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\packages\AngleSharp.0.13.0\lib\net46\AngleSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Dragablz, Version=0.0.3.203, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dragablz.0.0.3.203\lib\net45\Dragablz.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignColors, Version=1.2.2.920, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.2.2\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignThemes.Wpf, Version=3.0.1.920, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.3.0.1\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -56,6 +68,9 @@
       <HintPath>..\packages\System.Text.Encoding.CodePages.4.5.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -82,12 +97,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Infrastructure\ConverterTime.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\IFileService.cs" />
     <Compile Include="Model\IWallpaperParser.cs" />
     <Compile Include="Model\Resolution.cs" />
     <Compile Include="Model\Wallpaper.cs" />
     <Compile Include="Model\WallpaperCraftParser.cs" />
+    <Compile Include="Model\XmlFileService.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\MainWindow.xaml.cs">

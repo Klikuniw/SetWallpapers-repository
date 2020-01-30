@@ -5,69 +5,167 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SetWallpapers.ViewModel"
         xmlns:materialdesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         mc:Ignorable="d"
-        Title="SetWallpaper" Height="450" Width="400" WindowStartupLocation="CenterScreen">
+        Title="SetWallpaper" Height="450" Width="300"
+        ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen"
+        x:Name="GeneralWindow">
 
+    <i:Interaction.Triggers>
+
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding ClosingWindowCommand}" />
+        </i:EventTrigger>
+
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding StartedWindowCommand}" />
+        </i:EventTrigger>
+
+    </i:Interaction.Triggers>
 
 
     <Window.DataContext>
         <local:MainWindowViewModel></local:MainWindowViewModel>
     </Window.DataContext>
 
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
+        <!--Header-->
+        <Grid Background="#2196f3">
+            <TextBlock HorizontalAlignment="Left" FontSize="24" 
+                       VerticalAlignment="Center"
+                       Margin="10,10,0,8" 
+                       Foreground="White"
+                       FontStyle="Italic"
+                       >SetWallpapers</TextBlock>
 
-        <StackPanel>
-
-            <TextBlock FontSize="18" Margin="5,5">Select Categories</TextBlock>
-
-            <ListBox Margin="5" Name="ListBoxCategories" ItemsSource="{Binding Path = Categories}">
-
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical">
-                            <CheckBox Content="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"
-                                      IsChecked="{Binding Path = Checked,Mode=TwoWay}"></CheckBox>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-
-            </ListBox>
-
-        </StackPanel>
-
-
-
-        <StackPanel Grid.Column="1">
-
-            <WrapPanel VerticalAlignment="Center" Margin="5,0" Orientation="Horizontal">
-                <ComboBox Margin="5"
-                      materialdesign:HintAssist.Hint="Your Resolution"
-                      ItemsSource="{Binding Path = Resolutions}"
-                      SelectedValue="{Binding Path = SelectedResolution.Value}"
-                      SelectedValuePath="Value"
-                      DisplayMemberPath="Value"
-                >
-                </ComboBox>
-                <Button Command="{Binding GetResolutionCommand}">Auto</Button>
-            </WrapPanel>
-
-            <ComboBox Margin="10,0"
-                      HorizontalAlignment="Left"
-                      materialdesign:HintAssist.Hint="Interval"
-                      ItemsSource="{Binding Path = Intervals}"
-                      SelectedValue="{Binding Path = SelectedInterval}"
+            <Button HorizontalAlignment="Right" x:Name="ButtonClose" 
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    Width="30" Height="30"
+                    Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,10,10,10"
+                    Command="{Binding CloseAppCommand, Mode=OneWay}"
+                    CommandParameter="{Binding ElementName = GeneralWindow}"
                     >
-            </ComboBox>
 
-            <Button Margin="10" Height="30" Command="{Binding SaveChangesCommand}" >Save Changes</Button>
+                <materialdesign:PackIcon Kind="Power" />
+            </Button>
 
-        </StackPanel>
+            <Button HorizontalAlignment="Right" 
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    Width="30" Height="30"
+                    Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,10,40,10" 
+                    Command="{Binding HideAppCommand, Mode=OneWay}"
+                    CommandParameter="{Binding ElementName = GeneralWindow}"
+                    >
+                <materialdesign:PackIcon Kind="WindowMinimize" />
+            </Button>
+        </Grid>
+
+        <!--Tab panel-->
+        <dragablz:TabablzControl Grid.Row="1" FixedHeaderCount="3">
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController/>
+            </dragablz:TabablzControl.InterTabController>
+
+            <TabItem Header="HOME" >
+                <StackPanel Orientation="Vertical">
+
+                    <GroupBox Margin="5" Header="Status" 
+                              Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <WrapPanel>
+                            <TextBlock FontSize="16" FontWeight="DemiBold">Working</TextBlock>
+                        </WrapPanel>
+                        
+                    </GroupBox>
+
+                    <WrapPanel Margin="5">
+                        <TextBlock>Time to next wallpaper:</TextBlock>
+                        <TextBlock Margin="5 0 0 0"></TextBlock>
+                    </WrapPanel>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="SETTINGS">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Margin="5" Header="Categories" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <ListBox Name="ListBoxCategories" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ItemsSource="{Binding Path = Categories}">
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Content="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"
+                                                  IsChecked="{Binding Path = Checked,Mode=TwoWay}"></CheckBox>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True" Orientation="Horizontal"  />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+
+                        </ListBox>
+                    </GroupBox>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <GroupBox Header="Resolution" Margin="5" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                            <WrapPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                <ComboBox 
+                                    Width="80"
+                                    ItemsSource="{Binding Path = Resolutions}"
+                                          SelectedValue="{Binding Path = SelectedResolution.Value}"
+                                          SelectedValuePath="Value"
+                                          DisplayMemberPath="Value"
+                                >
+                                </ComboBox>
+                                <Button Margin="10 0 0 0"  Command="{Binding GetResolutionCommand}" FontSize="12">Auto</Button>
+                            </WrapPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Interval" Grid.Column="1" Margin="5" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                            <ComboBox Margin="10,0"
+                                      HorizontalAlignment="Left"
+                                      Width="70"
+                                      ItemsSource="{Binding Path = Intervals}"
+                                      SelectedValue="{Binding Path = SelectedInterval}"
+                            >
+                            </ComboBox>
+                        </GroupBox>
+
+                    </Grid>
+
+                    <Button Grid.Row="2" Width="80" Command="{Binding SaveChangesCommand}">Save</Button>
+                    
+                </Grid>
+
+            </TabItem>
+
+            <TabItem Header="ABOUT">
+                <TextBlock>Igor Klikun</TextBlock>
+            </TabItem>
+
+        </dragablz:TabablzControl>
+
     </Grid>
-
-
 </Window>
